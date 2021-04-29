@@ -50,11 +50,11 @@ export function PlantSave() {
 
     }
 
-    function handleOpenDateTimePickerForAndroid(){
+    function handleOpenDateTimePickerForAndroid() {
         setShowDatePicker(oldState => !oldState)
     }
 
-    async function handleSave(){
+    async function handleSave() {
         try {
             await savePlant({
                 ...plant,
@@ -62,7 +62,7 @@ export function PlantSave() {
             })
 
             navigation.navigate('Confirmation', {
-                title:'Tudo Certo',
+                title: 'Tudo Certo',
                 subTitle: 'Fique tranquilo  que sempre vamos lembrar você de cuidar da sua plantinha com muito cuidado',
                 buttonTitle: 'Muito Obrigado :D',
                 icon: 'hug',
@@ -74,67 +74,72 @@ export function PlantSave() {
     }
 
     return (
-        <View style={styles.container}>
-            <View style={styles.plantInfo}>
-                <SvgFromUri
-                    uri={plant.photo}
-                    height={150}
-                    width={150}
-                />
-
-                <Text style={styles.plantName}>
-                    {plant.name}
-                </Text>
-                <Text style={styles.plantAbout}>
-                    {plant.about}
-                </Text>
-            </View>
-
-            <View style={styles.controller}>
-                <View style={styles.tipContainer}>
-                    <Image
-                        source={waterdrop}
-                        style={styles.tipImage}
+        <ScrollView
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.container}
+        >
+            <View style={styles.container}>
+                <View style={styles.plantInfo}>
+                    <SvgFromUri
+                        uri={plant.photo}
+                        height={150}
+                        width={150}
                     />
-                    <Text style={styles.tipText}>
-                        {plant.water_tips}
+
+                    <Text style={styles.plantName}>
+                        {plant.name}
+                    </Text>
+                    <Text style={styles.plantAbout}>
+                        {plant.about}
                     </Text>
                 </View>
 
-                <Text style={styles.alertLabel}>
-                    Escolha o melhor horário para ser lembrado
+                <View style={styles.controller}>
+                    <View style={styles.tipContainer}>
+                        <Image
+                            source={waterdrop}
+                            style={styles.tipImage}
+                        />
+                        <Text style={styles.tipText}>
+                            {plant.water_tips}
+                        </Text>
+                    </View>
+
+                    <Text style={styles.alertLabel}>
+                        Escolha o melhor horário para ser lembrado
                 </Text>
 
-                {
-                    showDatePicker && (
-                        <DateTimePicker
-                            value={selectedDateTime}
-                            mode='time'
-                            display='spinner'
-                            onChange={handleChangeTime}
-                        />
-                    )}
+                    {
+                        showDatePicker && (
+                            <DateTimePicker
+                                value={selectedDateTime}
+                                mode='time'
+                                display='spinner'
+                                onChange={handleChangeTime}
+                            />
+                        )}
 
-                {
-                    Platform.OS === 'android' && (
-                        <TouchableOpacity 
-                            style={styles.DateTimePickerButton}
-                            onPress={handleOpenDateTimePickerForAndroid}
-                        >
-                            <Text style={styles.DateTimePickerText}>
-                                {`Mudar ${format(selectedDateTime, 'HH:mm')}`}
-                            </Text>
-                        </TouchableOpacity>
-                    )
-                }
+                    {
+                        Platform.OS === 'android' && (
+                            <TouchableOpacity
+                                style={styles.DateTimePickerButton}
+                                onPress={handleOpenDateTimePickerForAndroid}
+                            >
+                                <Text style={styles.DateTimePickerText}>
+                                    {`Mudar ${format(selectedDateTime, 'HH:mm')}`}
+                                </Text>
+                            </TouchableOpacity>
+                        )
+                    }
 
-                <Button
-                    title="Cadastrar planta"
-                    onPress={handleSave}
-                />
+                    <Button
+                        title="Cadastrar planta"
+                        onPress={handleSave}
+                    />
+                </View>
+
             </View>
-
-        </View>
+        </ScrollView>
     )
 }
 
